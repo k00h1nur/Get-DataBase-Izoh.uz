@@ -51,10 +51,23 @@ class Program
 
 						// Kerakli ma'lumotlarni olish
 						var h1Text = linkDoc.DocumentNode.SelectSingleNode("//h1")?.InnerText ?? "";
+						h1Text = h1Text.Replace("\n", "").Replace("\r", "");
 						var italicText = linkDoc.DocumentNode.SelectSingleNode("//div[contains(@class,'italic')]")?.InnerText ?? "";
+						italicText = italicText.Replace("\n", "").Replace("\r", "");
+						var italicnum = italicText switch
+						{
+							"ot" => 1,
+							"sf" => 2,
+							"sn" => 3,
+							"fl" => 4,
+							"ys" => 2,
+							"rv" => 6,
+							"ol" => 5,
+							_ => 1,
+						};
 						var boldText = linkDoc.DocumentNode.SelectSingleNode("//p[contains(@class,'font-bold')]")?.InnerText ?? "";
-
-						var data = $"{h1Text}||{italicText}||{boldText}";
+						boldText = boldText.Replace("\n", "").Replace("\r", "");
+						var data = $"(\'{h1Text}\',\'{boldText}\',{italicnum}),";
 						allWordsData.Add(data);
 					}
 
