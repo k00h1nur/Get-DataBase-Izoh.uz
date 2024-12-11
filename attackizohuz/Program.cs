@@ -7,7 +7,7 @@ using System.IO;
 
 class Program
 {
-	static async Task Main(string[] args)
+	static async Task<int> Main(string[] args)
 	{
 		var baseUrl = "https://izoh.uz/letter/A?size=500&page=";
 		var filePath = "D:\\Mobile\\New folder\\attackizohuz\\attackizohuz\\filewords.json";
@@ -51,9 +51,9 @@ class Program
 
 						// Kerakli ma'lumotlarni olish
 						var h1Text = linkDoc.DocumentNode.SelectSingleNode("//h1")?.InnerText ?? "";
-						h1Text = h1Text.Replace("\n", "").Replace("\r", "");
+						h1Text = h1Text.Replace("\n", "").Replace("\r", "").Replace("\t", "");
 						var italicText = linkDoc.DocumentNode.SelectSingleNode("//div[contains(@class,'italic')]")?.InnerText ?? "";
-						italicText = italicText.Replace("\n", "").Replace("\r", "");
+						italicText = italicText.Replace("\n", "").Replace("\r", "").Replace("\t", "");
 						var italicnum = italicText switch
 						{
 							"ot" => 1,
@@ -66,7 +66,7 @@ class Program
 							_ => 1,
 						};
 						var boldText = linkDoc.DocumentNode.SelectSingleNode("//p[contains(@class,'font-bold')]")?.InnerText ?? "";
-						boldText = boldText.Replace("\n", "").Replace("\r", "");
+						boldText = boldText.Replace("\n", "").Replace("\r", "").Replace("\t", "");
 						var data = $"(\'{h1Text}\',\'{boldText}\',{italicnum}),";
 						allWordsData.Add(data);
 					}
@@ -95,5 +95,7 @@ class Program
 				}
 			}
 		}
+
+		return 0;
 	}
 }
